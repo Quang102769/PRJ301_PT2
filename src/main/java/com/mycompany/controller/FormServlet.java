@@ -2,23 +2,28 @@ package com.mycompany.controller;
 
 import com.mycompany.dao.ContactDAO;
 import com.mycompany.model.Contact;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet("/ContactServlet")
 public class FormServlet extends HttpServlet {
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("WEB-INF/views/form.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/form.jsp").forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+
         String fullname = request.getParameter("fullname");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
@@ -36,10 +41,11 @@ public class FormServlet extends HttpServlet {
 
             HttpSession session = request.getSession();
             session.setAttribute("userRole", "ADMIN");
-            request.getRequestDispatcher("WEB-INF/views/result.jsp").forward(request, response);
+
+            request.setAttribute("saved", contact);
+            request.getRequestDispatcher("/WEB-INF/views/result.jsp").forward(request, response);
         } catch (SQLException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new ServletException(e);
         }
     }
 }
