@@ -1,0 +1,18 @@
+<persistence xmlns="http://xmlns.jakarta.org/xml/ns/persistence" 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jakarta.org/xml/ns/persistence
+             http://xmlns.jakarta.org/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+    <persistence-unit name="PRJ301PU">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=PRJ301;encrypt=false;trustServerCertificate=true" />
+            <property name="jakarta.persistence.jdbc.user" value="admin" />
+            <property name="jakarta.persistence.jdbc.password" value="123" />
+            <property name="jakarta.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
+            <property name="hibernate.hbm2ddl.auto" value="validate" />
+            <property name="hibernate.show_sql" value="true" />
+        </properties>
+    </persistence-unit>
+</persistence>
